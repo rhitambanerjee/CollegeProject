@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ML Model Selection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Upload a CSV Dataset</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            
+            <!-- Select Models to Apply -->
+            <h2>Select Models to Apply:</h2>
+            <label><input type="radio" name="model" value="RandomForestClassifier" checked>Random Forest</label><br>
+            <label><input type="radio" name="model" value="GradientBoostingClassifier">Gradient Boosting</label><br>
+            <label><input type="radio" name="model" value="LogisticRegression">Logistic Regression</label><br>
+            <label><input type="radio" name="model" value="SVC">Support Vector Classifier</label><br>
+            <label><input type="radio" name="model" value="KNeighborsClassifier">K-Neighbors</label><br>
+            
+            <!-- Select Feature Selection Method -->
+            <h2>Select Feature Selection Method:</h2>
+            <label><input type="radio" name="feature" value="chi2" checked>Chi Square</label><br>
+            <label><input type="radio" name="feature" value="forward_selection">Forward Feature Selection</label><br>
+            <label><input type="radio" name="feature" value="backward_elimination">Backward Feature Elimination</label><br>
+            
+            <!-- Enable Exhaustive Feature Selection -->
+            <h2>Enable Exhaustive Feature Selection:</h2>
+            <label><input type="checkbox" name="exhaustive">Enable Exhaustive Feature Selection</label><br>
+            
+            <button type="submit">Upload and Process</button>
+        </form>
+        
+        <!-- Display Results -->
+        {% if message %}
+        <div class="result">
+            <h3>Results:</h3>
+            <p>{{ message }}</p>
+        </div>
+        {% endif %}
+        
+        <!-- Display Model Results -->
+        {% if model_results %}
+        <div class="model-results">
+            <h3>Model Results:</h3>
+            {{ model_results|safe }}
+        </div>
+        {% endif %}
+        
+        <!-- Display Selected Features -->
+        {% if selected_features %}
+        <div class="selected-features">
+            <h3>Selected Features:</h3>
+            <ul>
+                {% for feature in selected_features %}
+                <li>{{ feature }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
