@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feature Selection and Model Accuracy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 15px 0 10px;
+            font-weight: bold;
+        }
+        input[type="file"],
+        select,
+        input[type="number"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 24px;
+            padding-right: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Feature Selection and Model Accuracy</h1>
+        <form action="/" method="POST" enctype="multipart/form-data">
+            <label for="file">Upload CSV File:</label>
+            <input type="file" name="file" id="file" required>
+            
+            <label for="feature">Select Feature Selection Method:</label>
+            <select name="feature" id="feature" required>
+                <option value="chi2">Chi-Square</option>
+                <option value="f_classif">F-Classification</option>
+                <option value="variance_threshold">Variance Threshold</option>
+                <option value="select_from_model">Select From Model</option>
+                <option value="rfe">Recursive Feature Elimination</option>
+                <option value="relief">ReliefF</option>
+                <option value="mrmr">MRMR</option>
+                <option value="cfs">CFS</option>
+                <option value="fisher_score">Fisher Score</option>
+                <option value="l21">L21</option>
+                <option value="forward_selection">Forward Selection</option>
+                <option value="backward_elimination">Backward Elimination</option>
+            </select>
+            
+            <label for="k_features">Number of Features (k):</label>
+            <input type="number" name="k_features" id="k_features" value="10" min="1" required>
+            
+            <input type="submit" value="Submit">
+        </form>
+        
+        {% if accuracies %}
+        <h2>Model Accuracies</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Accuracy (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for model, accuracy in accuracies.items() %}
+                <tr>
+                    <td>{{ model }}</td>
+                    <td>{{ accuracy }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</body>
+</html>
